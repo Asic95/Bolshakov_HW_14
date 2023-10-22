@@ -14,7 +14,6 @@ public class Bolshakov_HW_14 extends BaseTestClass {
         driver.findElement(By.cssSelector("#textbox")).sendKeys(readDataFromLocalFile(localFile));
         driver.findElement(By.cssSelector("#create")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Download")));
-        Thread.sleep(3000);
         driver.findElement(By.linkText("Download")).click();
 
         if (waitTillFileIsLoaded(downloadFile)){
