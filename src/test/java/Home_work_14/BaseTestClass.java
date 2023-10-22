@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -21,8 +20,7 @@ public class BaseTestClass {
     public WebDriverWait wait;
     public String downloadPath = System.getProperty("user.home") + "\\Downloads\\";
     File downloadFile = new File(downloadPath + "easyinfo.txt");
-    static final String DATA_FOR_FILE = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-
+    static File localFile = new File("textExample.txt");
 
     @BeforeClass
     public void setUp() {
@@ -35,6 +33,18 @@ public class BaseTestClass {
     @AfterClass
     public void closeBrowser() {
         driver.quit();
+    }
+
+    public static String readDataFromLocalFile(File file) throws IOException {              // читаємо дані з локального файлу textExample.txt
+
+        FileUtils.readLines(file, Charset.defaultCharset());
+        List<String> staticData = FileUtils.readLines(file, Charset.defaultCharset());
+
+        if (staticData.size() > 1) {
+            return staticData.toString().replace(",", "\n").replace("[", "").replace("]", "").replace(" ", "");
+        } else {
+            return staticData.toString().replace("[", "").replace("]", "");
+        }
     }
 
     public static Boolean waitTillFileIsLoaded(File file) throws InterruptedException {     // очікуємо поки файл завантажиться
@@ -63,12 +73,16 @@ public class BaseTestClass {
     }
 
     public static Boolean ReadFromFileAndCompare(File file) throws IOException {            // Зчитауємо дані з файлу та порівнюємо з константою
+
         FileUtils.readLines(file, Charset.defaultCharset());
         List<String> fileData = FileUtils.readLines(file, Charset.defaultCharset());
+        String data1 = "";
 
-        List<String> staticData = new ArrayList<>();
-        staticData.add(0, DATA_FOR_FILE);
-
-        return fileData.equals(staticData);
+        if (fileData.size() > 1) {
+            data1 = fileData.toString().replace(",", "\n").replace("[", "").replace("]", "").replace(" ", "");
+        } else {
+            data1 = fileData.toString().replace("[", "").replace("]", "");
+        }
+        return data1.equals(readDataFromLocalFile(localFile));
     }
 }

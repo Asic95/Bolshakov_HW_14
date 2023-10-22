@@ -11,9 +11,10 @@ public class Bolshakov_HW_14 extends BaseTestClass {
 
     @Test(testName = "Створення, завантаження та перевірка файла")
     public void FileCreateAndDownload() throws InterruptedException, IOException {
-        driver.findElement(By.cssSelector("#textbox")).sendKeys(DATA_FOR_FILE);
+        driver.findElement(By.cssSelector("#textbox")).sendKeys(readDataFromLocalFile(localFile));
         driver.findElement(By.cssSelector("#create")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Download")));
+        Thread.sleep(3000);
         driver.findElement(By.linkText("Download")).click();
 
         if (waitTillFileIsLoaded(downloadFile)){
@@ -25,5 +26,4 @@ public class Bolshakov_HW_14 extends BaseTestClass {
         downloadFile.deleteOnExit(); // видаляємо завантажений файл
 
     }
-
 }
