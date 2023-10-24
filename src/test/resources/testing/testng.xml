@@ -4,7 +4,7 @@
 <suite name="Bolshakov suite">
 <test name="Bolshakov test">
     <classes>
-        <class name="Home_work_14.Bolshakov_HW_14"/>
+        <class name="Home_work_14.Bolshakov_HW_14_page_object"/>
     </classes>
 </test>
 </suite>

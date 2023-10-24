@@ -16,13 +16,13 @@ public class Bolshakov_HW_14 extends BaseTestClass {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Download")));
         driver.findElement(By.linkText("Download")).click();
 
-        if (waitTillFileIsLoaded(downloadFile)){
-        Assert.assertTrue(ReadFromFileAndCompare(downloadFile), "File data not equal to constant!");
+        if (waitTillFileIsLoaded(downloadFile)) {
+            Assert.assertTrue(ReadFromFileAndCompare(downloadFile), "File data not equal to constant!");
+            downloadFile.deleteOnExit(); // видаляємо завантажений файл
         } else {
             System.out.println("Something went wrong!");
+            downloadFile.deleteOnExit(); // видаляємо завантажений файл
         }
-
-        downloadFile.deleteOnExit(); // видаляємо завантажений файл
 
     }
 
